@@ -16,6 +16,11 @@ void AudioPlugin::releaseResources(){
 
 }
 
+template<typename T>
+void AudioPlugin::processSamples(AudioBuffer<T>& buffer, MidiBuffer& midiBuffer){
+    buffer.applyGain(*gain);
+}
+
 void AudioPlugin::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiBuffer)
 {
     buffer.applyGain (*gain);
@@ -29,14 +34,14 @@ void AudioPlugin::processBlock (AudioBuffer<double>& buffer, MidiBuffer& midiBuf
 void AudioPlugin::getStateInformation (MemoryBlock& destData)
 {
     MemoryOutputStream* memoryOutputStream = new MemoryOutputStream(destData, true);
-    memoryOutputStream.writeFloat(*gain);
+    memoryOutputStream->writeFloat(*gain);
     delete memoryOutputStream;
 }
 
 void AudioPlugin::setStateInformation (const void* data, int sizeInBytes)
 {
     MemoryInputStream* memoryInputStream = new MemoryInputStream (data, static_cast<size_t> (sizeInBytes), false);
-    gain->setValueNotifyingHost(memoryInputStream.readFloat());
+    gain->setValueNotifyingHost(memoryInputStream->readFloat());
     delete memoryInputStream;
 }
 

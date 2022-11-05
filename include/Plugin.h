@@ -13,9 +13,10 @@ public:
     void prepareToPlay (double, int) override;
     void releaseResources() override;
 
-    void processBlock (AudioBuffer<float>& buffer, MidiBuffer&) override;
-
-    void processBlock (AudioBuffer<double>& buffer, MidiBuffer&) override;
+    template<typename T>
+    void processSamples(AudioBuffer<T>& audioBuffer, MidiBuffer& midiBuffer);
+    void processBlock (AudioBuffer<float>& audioBuffer, MidiBuffer& midiBuffer) override;
+    void processBlock (AudioBuffer<double>& audioBuffer, MidiBuffer& midiBuffer) override;
 
     //==============================================================================
     AudioProcessorEditor* createEditor() override          { return new GenericAudioProcessorEditor (*this); }
