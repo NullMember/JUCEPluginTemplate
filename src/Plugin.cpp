@@ -28,14 +28,16 @@ void AudioPlugin::processBlock (AudioBuffer<double>& buffer, MidiBuffer& midiBuf
 
 void AudioPlugin::getStateInformation (MemoryBlock& destData)
 {
-    auto memoryOutputStream = MemoryOutputStream(destData, true);
+    MemoryOutputStream* memoryOutputStream = new MemoryOutputStream(destData, true);
     memoryOutputStream.writeFloat(*gain);
+    delete memoryOutputStream;
 }
 
 void AudioPlugin::setStateInformation (const void* data, int sizeInBytes)
 {
-    auto memoryInputStream = MemoryInputStream (data, static_cast<size_t> (sizeInBytes), false);
+    MemoryInputStream* memoryInputStream = new MemoryInputStream (data, static_cast<size_t> (sizeInBytes), false);
     gain->setValueNotifyingHost(memoryInputStream.readFloat());
+    delete memoryInputStream;
 }
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
