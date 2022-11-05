@@ -19,19 +19,19 @@ void AudioPlugin::releaseResources()
 }
 
 template <typename T>
-void AudioPlugin::processSamples(AudioBuffer<T> &buffer, MidiBuffer &midiBuffer)
+void AudioPlugin::processSamples(AudioBuffer<T> &audioBuffer, MidiBuffer &midiBuffer)
 {
-    buffer.applyGain(*gain);
+    audioBuffer.applyGain(*gain);
 }
 
-void AudioPlugin::processBlock(AudioBuffer<float> &buffer, MidiBuffer &midiBuffer)
+void AudioPlugin::processBlock(AudioBuffer<float> &audioBuffer, MidiBuffer &midiBuffer)
 {
-    processSamples<float>(buffer, midiBuffer);
+    processSamples<float>(audioBuffer, midiBuffer);
 }
 
-void AudioPlugin::processBlock(AudioBuffer<double> &buffer, MidiBuffer &midiBuffer)
+void AudioPlugin::processBlock(AudioBuffer<double> &audioBuffer, MidiBuffer &midiBuffer)
 {
-    processSamples<double>(buffer, midiBuffer);
+    processSamples<double>(audioBuffer, midiBuffer);
 }
 
 void AudioPlugin::getStateInformation(MemoryBlock &destData)
